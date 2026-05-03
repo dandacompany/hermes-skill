@@ -42,7 +42,7 @@ Edit with `hermes config edit` or narrow changes with `hermes config set KEY VAL
 | `memory` | `memory_enabled`, `user_profile_enabled`, `provider`. |
 | `security` | `redact_secrets`, website/tool safety settings. |
 | `privacy` | `redact_pii` for gateway context. |
-| `delegation` | Delegate model/provider/base URL/API key/max iterations/reasoning. |
+| `delegation` | Delegate model/provider/base URL/API key/max iterations/reasoning, child timeout, concurrency, and nested orchestration limits. |
 | `checkpoints` | `enabled`, `max_snapshots`. |
 | `approvals` | `mode` for command approval behavior. |
 
@@ -107,7 +107,7 @@ Common toolsets:
 | `skills` | Skill browse/install/manage tools. |
 | `memory` | Persistent memory access. |
 | `session_search` | Search previous sessions. |
-| `delegation` | Subagent delegation. |
+| `delegation` | Synchronous subagent delegation through `delegate_task`; see `references/delegation-vs-kanban.md` before using it for multi-agent work. |
 | `cronjob` | Scheduled jobs. |
 | `messaging` | Cross-platform message sending. |
 | `clarify` | Ask user clarifying questions. |
@@ -115,6 +115,8 @@ Common toolsets:
 | `rl`, `moa`, `homeassistant` | Specialized optional toolsets. |
 
 Tool changes usually require `/reset` or a new Hermes process.
+
+For delegation, keep child toolsets narrow. Leaf children cannot delegate further and cannot use user-clarification, shared-memory, or cross-platform message-sending tools. Use Kanban rather than `delegate_task` when work needs durable status, retry, human comments, or named profile identity.
 
 ## Security And Privacy
 

@@ -17,6 +17,8 @@ Use Kanban when work needs:
 
 Do not use Kanban for simple one-shot questions; use `hermes chat -q` or `hermes -z` instead.
 
+Do not use `delegate_task` as a durable handoff mechanism. `delegate_task` is a synchronous subagent call inside one parent turn. Kanban is the durable board for visible status, dependencies, retries, comments, and named profile workers. See `references/delegation-vs-kanban.md` for the full decision guide.
+
 ## Core Objects
 
 | Object | Meaning |
@@ -141,6 +143,8 @@ hermes gateway status
 ```
 
 Use `dispatch --dry-run` before enabling unattended dispatch.
+
+Kanban workers may use `delegate_task` internally during a run, for example to parallelize short research checks. The Kanban task remains the durable unit of record; the delegated children are temporary implementation detail.
 
 ## Worker Monitoring
 

@@ -38,6 +38,8 @@ Use this reference to jump to the current official Hermes documentation before r
 | MCP | https://hermes-agent.nousresearch.com/docs/user-guide/features/mcp |
 | Use MCP with Hermes | https://hermes-agent.nousresearch.com/docs/guides/use-mcp-with-hermes |
 | Cron | https://hermes-agent.nousresearch.com/docs/user-guide/features/cron |
+| Subagent delegation | https://hermes-agent.nousresearch.com/docs/user-guide/features/delegation |
+| Delegation patterns | https://hermes-agent.nousresearch.com/docs/guides/delegation-patterns |
 | Kanban | https://hermes-agent.nousresearch.com/docs/user-guide/features/kanban |
 | Voice mode | https://hermes-agent.nousresearch.com/docs/user-guide/features/voice-mode |
 | Voice tutorial | https://hermes-agent.nousresearch.com/docs/guides/use-voice-mode-with-hermes |

@@ -107,6 +107,12 @@ hermes kanban dispatch --dry-run
 
 Use `references/kanban-operations.md` for worker profiles, isolated workspaces, dispatch behavior, notifications, and cleanup.
 
+## Delegation Vs Durable Work
+
+Use `delegate_task` for short isolated subagent work that the current parent turn must wait for, such as parallel research or fresh-context review. Use Kanban, cron, background terminal, or tmux when work should outlive the current turn.
+
+Use `references/delegation-vs-kanban.md` before designing multi-agent workflows, especially when choosing between anonymous subagents and named profile workers.
+
 ## Memory And Skills
 
 Use:

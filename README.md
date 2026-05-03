@@ -16,6 +16,7 @@ This skill keeps `SKILL.md` lean and routes detailed procedures into references 
 - in-session slash commands
 - providers, toolsets, config paths, security, and privacy toggles
 - operator-level plugins, tools, skills, and MCP management
+- `delegate_task` subagents and when to use Kanban instead
 - voice, transcription, TTS, image input, and media troubleshooting
 - self-improvement review after Hermes behavior or command changes are discovered
 - profiles, cron, webhooks, skills, memory, MCP, dashboards, and logs
@@ -67,6 +68,7 @@ python3 scripts/hermes_slack_check.py
 - A safety layer that checks local CLI behavior before trusting remembered commands.
 - A practical guide for Slack, plugins, tools, skills, MCP, cron, profiles, and daily use.
 - A Kanban operator guide for profile workers, isolated workspaces, dependencies, and task notifications.
+- A delegation guide for short-lived subagents, parallel checks, and choosing the right durable alternative.
 
 ## What This Is Not
 
@@ -76,7 +78,7 @@ python3 scripts/hermes_slack_check.py
 
 ## Keywords
 
-Hermes Agent, Hermes Slack bot setup, Hermes gateway self hosting, Hermes install tutorial, Hermes operations runbook, Hermes plugins, Hermes tools, Hermes MCP, Hermes cron, Hermes profiles, Hermes Kanban.
+Hermes Agent, Hermes Slack bot setup, Hermes gateway self hosting, Hermes install tutorial, Hermes operations runbook, Hermes plugins, Hermes tools, Hermes MCP, Hermes cron, Hermes profiles, Hermes Kanban, Hermes delegate_task, Hermes subagents.
 
 ## Why This Exists
 
