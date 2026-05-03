@@ -8,7 +8,9 @@ This skill keeps `SKILL.md` lean and routes detailed procedures into references 
 
 - setup, updates, backups, and health checks
 - first-run tutorials, self-hosted gateway setup, and daily usage flows
+- read-only operations and Slack gateway checks
 - exact local CLI discovery through `hermes --help` and `hermes <command> --help`
+- official documentation link routing
 - Slack gateway setup with Socket Mode
 - tmux-managed Hermes sessions
 - in-session slash commands
@@ -50,6 +52,30 @@ Refresh the generated local command map after Hermes updates:
 ```bash
 python3 scripts/hermes_check.py --write-help references/command-map.generated.md
 ```
+
+Run read-only operations checks:
+
+```bash
+python3 scripts/hermes_ops_check.py
+python3 scripts/hermes_slack_check.py
+```
+
+## What This Is
+
+- A self-hosting and operator runbook for Hermes Agent.
+- A setup and tutorial skill for users who want Hermes working locally or through gateways.
+- A safety layer that checks local CLI behavior before trusting remembered commands.
+- A practical guide for Slack, plugins, tools, skills, MCP, cron, profiles, and daily use.
+
+## What This Is Not
+
+- A source-code contribution guide for Hermes internals.
+- A replacement for the official bundled `hermes-agent` skill when developing Hermes itself.
+- A tool that updates Hermes or changes secrets without user approval.
+
+## Keywords
+
+Hermes Agent, Hermes Slack bot setup, Hermes gateway self hosting, Hermes install tutorial, Hermes operations runbook, Hermes plugins, Hermes tools, Hermes MCP, Hermes cron, Hermes profiles.
 
 ## Why This Exists
 

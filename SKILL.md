@@ -31,6 +31,7 @@ Report update availability before changing configuration. Do not run `hermes upd
    - `references/setup-and-update.md` for install, versioning, updates, config health, backups, and safe update policy.
    - `references/getting-started-tutorials.md` for first-run setup, self-hosting paths, guided usage flows, and user-facing tutorials.
    - `references/command-catalog.md` for command categories and common CLI patterns.
+   - `references/official-links.md` for official docs, release, reference, and troubleshooting links.
    - `references/slack-gateway.md` for Slack app, channel, Socket Mode, manifest, gateway, and allowlist setup.
    - `references/operations-runbook.md` for tmux sessions, one-shot execution, profiles, cron, webhooks, memory, skills, and autonomy guardrails.
    - `references/slash-commands.md` for in-session `/...` commands, gateway slash commands, and when to prefer CLI commands.
@@ -43,6 +44,14 @@ Report update availability before changing configuration. Do not run `hermes upd
 4. For interactive Hermes or `tmux` work, read the current pane before sending keys. Explain prompts and recommend a choice before sending input.
 5. Prefer deterministic commands and scripts for inspection. Keep non-deterministic guidance in reference docs or in the Hermes conversation itself.
 6. At the end of each Hermes task, run the self-improvement review in `references/self-improvement.md`.
+
+## Common Request Routing
+
+- "Install Hermes" or "self-host Hermes" -> `getting-started-tutorials.md`, `setup-and-update.md`, then `official-links.md`.
+- "Set up Slack channel" -> `slack-gateway.md`, run `scripts/hermes_slack_check.py`, then `troubleshooting.md`.
+- "Check if my Hermes is healthy" -> run `scripts/hermes_ops_check.py`, then `setup-and-update.md`.
+- "Enable a plugin/tool/MCP server" -> `plugins-and-tools.md`, `providers-tools-security.md`.
+- "Teach me how to use Hermes" -> `getting-started-tutorials.md`, `slash-commands.md`, `command-catalog.md`.
 
 ## Current CLI Baseline
 

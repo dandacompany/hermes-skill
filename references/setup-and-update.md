@@ -21,6 +21,7 @@ For a fuller health pass:
 
 ```bash
 python3 <skill-dir>/scripts/hermes_check.py --json --health --skills-check
+python3 <skill-dir>/scripts/hermes_ops_check.py --json
 ```
 
 Interpretation:

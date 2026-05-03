@@ -14,6 +14,7 @@ Ask whether the task revealed any of these:
 - A reproducible troubleshooting pattern.
 - A safer operating rule, approval boundary, or secret-handling requirement.
 - A scriptable check that would prevent future mistakes.
+- A broken official documentation link in `references/official-links.md`.
 
 If none apply, do not edit the skill.
 
@@ -52,6 +53,7 @@ After editing the skill, validate it:
 ```bash
 python3 /Users/dante/.agents/skills/skill-creator/scripts/quick_validate.py <skill-dir>
 npx skills add <skill-dir> -l
+python3 <skill-dir>/scripts/hermes_ops_check.py --json --skip-gateway
 ```
 
 For repo-maintained copies, also check:

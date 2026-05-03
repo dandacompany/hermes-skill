@@ -11,6 +11,7 @@ hermes doctor
 hermes config check
 hermes status --all
 hermes logs errors
+python3 <skill-dir>/scripts/hermes_ops_check.py
 ```
 
 When a command fails, immediately run:
@@ -66,6 +67,7 @@ Debug:
 hermes gateway run
 hermes logs errors
 hermes config env-path
+python3 <skill-dir>/scripts/hermes_slack_check.py
 ```
 
 ## Skills Not Updating

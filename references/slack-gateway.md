@@ -8,6 +8,7 @@ Use this reference for Hermes Slack channel setup. Hermes uses modern Slack Bolt
 
 ```bash
 python3 <skill-dir>/scripts/hermes_check.py --json
+python3 <skill-dir>/scripts/hermes_slack_check.py --json
 hermes slack manifest --help
 hermes gateway setup --help
 ```
