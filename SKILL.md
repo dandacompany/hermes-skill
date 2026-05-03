@@ -32,6 +32,10 @@ Report update availability before changing configuration. Do not run `hermes upd
    - `references/command-catalog.md` for command categories and common CLI patterns.
    - `references/slack-gateway.md` for Slack app, channel, Socket Mode, manifest, gateway, and allowlist setup.
    - `references/operations-runbook.md` for tmux sessions, one-shot execution, profiles, cron, webhooks, memory, skills, and autonomy guardrails.
+   - `references/slash-commands.md` for in-session `/...` commands, gateway slash commands, and when to prefer CLI commands.
+   - `references/providers-tools-security.md` for key paths, config sections, providers, toolsets, approval modes, redaction, and privacy.
+   - `references/voice-and-media.md` for STT, TTS, voice mode, image input, and media-related troubleshooting.
+   - `references/developer-reference.md` for Hermes source layout, adding tools or slash commands, testing, and contribution rules.
    - `references/troubleshooting.md` for logs, Slack failures, token problems, stale skills, gateway issues, and community-known pitfalls.
    - `references/command-map.generated.md` only when exact local help output is needed.
 4. For interactive Hermes or `tmux` work, read the current pane before sending keys. Explain prompts and recommend a choice before sending input.

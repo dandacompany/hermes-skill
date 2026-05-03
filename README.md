@@ -10,6 +10,10 @@ This skill keeps `SKILL.md` lean and routes detailed procedures into references 
 - exact local CLI discovery through `hermes --help` and `hermes <command> --help`
 - Slack gateway setup with Socket Mode
 - tmux-managed Hermes sessions
+- in-session slash commands
+- providers, toolsets, config paths, security, and privacy toggles
+- voice, transcription, TTS, image input, and media troubleshooting
+- Hermes source-level developer/contributor reference
 - profiles, cron, webhooks, skills, memory, MCP, dashboards, and logs
 - troubleshooting known gateway, token, update, and stale-skill issues
 
