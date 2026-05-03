@@ -7,7 +7,7 @@ Use this reference for Hermes Slack channel setup. Hermes uses modern Slack Bolt
 1. Check local Hermes state:
 
 ```bash
-python3 /Users/dante/.agents/skills/hermes/scripts/hermes_check.py --json
+python3 <skill-dir>/scripts/hermes_check.py --json
 hermes slack manifest --help
 hermes gateway setup --help
 ```

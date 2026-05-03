@@ -14,13 +14,13 @@ Use this reference for installation state, update checks, backup policy, health 
 Run the deterministic probe:
 
 ```bash
-python3 /Users/dante/.agents/skills/hermes/scripts/hermes_check.py --json
+python3 <skill-dir>/scripts/hermes_check.py --json
 ```
 
 For a fuller health pass:
 
 ```bash
-python3 /Users/dante/.agents/skills/hermes/scripts/hermes_check.py --json --health --skills-check
+python3 <skill-dir>/scripts/hermes_check.py --json --health --skills-check
 ```
 
 Interpretation:

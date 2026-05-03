@@ -9,16 +9,16 @@ description: This skill should be used when configuring, operating, updating, tr
 
 Use this skill for Hermes Agent operations: setup, model/provider selection, gateway platforms, Slack channel setup, command discovery, updates, skills, memory, profiles, MCP, cron, logs, dashboards, and long-running tmux sessions.
 
-Do not rely on stale remembered commands. Hermes changes quickly. At the start of each Hermes task, run:
+Do not rely on stale remembered commands. Hermes changes quickly. At the start of each Hermes task, resolve `scripts/hermes_check.py` relative to this skill directory and run:
 
 ```bash
-python3 /Users/dante/.agents/skills/hermes/scripts/hermes_check.py --json
+python3 <skill-dir>/scripts/hermes_check.py --json
 ```
 
 If command behavior matters, also refresh the generated local command snapshot:
 
 ```bash
-python3 /Users/dante/.agents/skills/hermes/scripts/hermes_check.py --write-help /Users/dante/.agents/skills/hermes/references/command-map.generated.md
+python3 <skill-dir>/scripts/hermes_check.py --write-help <skill-dir>/references/command-map.generated.md
 ```
 
 Report update availability before changing configuration. Do not run `hermes update` without explicit user approval unless the user already asked to update.
