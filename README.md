@@ -14,6 +14,7 @@ This skill keeps `SKILL.md` lean and routes detailed procedures into references 
 - providers, toolsets, config paths, security, and privacy toggles
 - voice, transcription, TTS, image input, and media troubleshooting
 - Hermes source-level developer/contributor reference
+- self-improvement review after Hermes behavior or command changes are discovered
 - profiles, cron, webhooks, skills, memory, MCP, dashboards, and logs
 - troubleshooting known gateway, token, update, and stale-skill issues
 

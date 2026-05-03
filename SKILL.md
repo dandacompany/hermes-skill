@@ -36,10 +36,12 @@ Report update availability before changing configuration. Do not run `hermes upd
    - `references/providers-tools-security.md` for key paths, config sections, providers, toolsets, approval modes, redaction, and privacy.
    - `references/voice-and-media.md` for STT, TTS, voice mode, image input, and media-related troubleshooting.
    - `references/developer-reference.md` for Hermes source layout, adding tools or slash commands, testing, and contribution rules.
+   - `references/self-improvement.md` for updating this skill after new Hermes behavior, command changes, or operational lessons are discovered.
    - `references/troubleshooting.md` for logs, Slack failures, token problems, stale skills, gateway issues, and community-known pitfalls.
    - `references/command-map.generated.md` only when exact local help output is needed.
 4. For interactive Hermes or `tmux` work, read the current pane before sending keys. Explain prompts and recommend a choice before sending input.
 5. Prefer deterministic commands and scripts for inspection. Keep non-deterministic guidance in reference docs or in the Hermes conversation itself.
+6. At the end of each Hermes task, run the self-improvement review in `references/self-improvement.md`.
 
 ## Current CLI Baseline
 
