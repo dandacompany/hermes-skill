@@ -1,13 +1,13 @@
 ---
 name: hermes
-description: This skill should be used when configuring, operating, updating, troubleshooting, or extending NousResearch Hermes Agent, including CLI usage, gateway and Slack setup, skills, profiles, memory, MCP, cron, dashboards, and tmux-managed Hermes sessions.
+description: This skill should be used when self-hosting, installing, configuring, operating, updating, troubleshooting, or learning to use NousResearch Hermes Agent, including CLI usage, gateway and Slack setup, plugins, tools, skills, profiles, memory, MCP, cron, dashboards, and tmux-managed Hermes sessions.
 ---
 
 # Hermes
 
 ## Use First
 
-Use this skill for Hermes Agent operations: setup, model/provider selection, gateway platforms, Slack channel setup, command discovery, updates, skills, memory, profiles, MCP, cron, logs, dashboards, and long-running tmux sessions.
+Use this skill for Hermes Agent self-hosting and day-to-day operation: install, setup, model/provider selection, gateway platforms, Slack channel setup, command discovery, updates, plugins, tools, skills, memory, profiles, MCP, cron, logs, dashboards, tutorials, and long-running tmux sessions.
 
 Do not rely on stale remembered commands. Hermes changes quickly. At the start of each Hermes task, resolve `scripts/hermes_check.py` relative to this skill directory and run:
 
@@ -29,13 +29,14 @@ Report update availability before changing configuration. Do not run `hermes upd
 2. Use `hermes --help` and `hermes <command> --help` as the source of truth for executable commands.
 3. Load only the needed reference file:
    - `references/setup-and-update.md` for install, versioning, updates, config health, backups, and safe update policy.
+   - `references/getting-started-tutorials.md` for first-run setup, self-hosting paths, guided usage flows, and user-facing tutorials.
    - `references/command-catalog.md` for command categories and common CLI patterns.
    - `references/slack-gateway.md` for Slack app, channel, Socket Mode, manifest, gateway, and allowlist setup.
    - `references/operations-runbook.md` for tmux sessions, one-shot execution, profiles, cron, webhooks, memory, skills, and autonomy guardrails.
    - `references/slash-commands.md` for in-session `/...` commands, gateway slash commands, and when to prefer CLI commands.
    - `references/providers-tools-security.md` for key paths, config sections, providers, toolsets, approval modes, redaction, and privacy.
+   - `references/plugins-and-tools.md` for user/operator plugin installation, tool enablement, MCP connections, and safe verification.
    - `references/voice-and-media.md` for STT, TTS, voice mode, image input, and media-related troubleshooting.
-   - `references/developer-reference.md` for Hermes source layout, adding tools or slash commands, testing, and contribution rules.
    - `references/self-improvement.md` for updating this skill after new Hermes behavior, command changes, or operational lessons are discovered.
    - `references/troubleshooting.md` for logs, Slack failures, token problems, stale skills, gateway issues, and community-known pitfalls.
    - `references/command-map.generated.md` only when exact local help output is needed.

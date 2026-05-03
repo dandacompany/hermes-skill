@@ -2,18 +2,19 @@
 
 [![skills.sh](https://skills.sh/b/dandacompany/hermes-skill)](https://skills.sh/dandacompany/hermes-skill)
 
-Agent skill for configuring, operating, updating, troubleshooting, and extending [NousResearch Hermes Agent](https://github.com/NousResearch/hermes-agent).
+Agent skill for self-hosting, installing, configuring, operating, updating, troubleshooting, and learning to use [NousResearch Hermes Agent](https://github.com/NousResearch/hermes-agent).
 
 This skill keeps `SKILL.md` lean and routes detailed procedures into references for:
 
 - setup, updates, backups, and health checks
+- first-run tutorials, self-hosted gateway setup, and daily usage flows
 - exact local CLI discovery through `hermes --help` and `hermes <command> --help`
 - Slack gateway setup with Socket Mode
 - tmux-managed Hermes sessions
 - in-session slash commands
 - providers, toolsets, config paths, security, and privacy toggles
+- operator-level plugins, tools, skills, and MCP management
 - voice, transcription, TTS, image input, and media troubleshooting
-- Hermes source-level developer/contributor reference
 - self-improvement review after Hermes behavior or command changes are discovered
 - profiles, cron, webhooks, skills, memory, MCP, dashboards, and logs
 - troubleshooting known gateway, token, update, and stale-skill issues
@@ -35,7 +36,7 @@ npx skills add dandacompany/hermes-skill --skill hermes
 Ask your coding agent to use the `hermes` skill when working with Hermes Agent:
 
 ```text
-Use the hermes skill and configure Slack gateway step by step.
+Use the hermes skill and walk me through self-hosting Hermes with Slack gateway.
 ```
 
 The skill begins every task by checking the local Hermes installation:
@@ -52,7 +53,7 @@ python3 scripts/hermes_check.py --write-help references/command-map.generated.md
 
 ## Why This Exists
 
-Hermes Agent changes quickly. Third-party examples can become stale, especially around CLI commands. This skill treats the local Hermes executable as the source of truth and keeps long guidance outside `SKILL.md` so agents load only the references needed for the task.
+Hermes Agent changes quickly. Third-party examples can become stale, especially around CLI commands. This skill treats the local Hermes executable as the source of truth and keeps long guidance outside `SKILL.md` so agents load only the references needed for the user's setup, operations, and learning task.
 
 ## Notes
 
