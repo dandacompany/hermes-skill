@@ -8,3 +8,4 @@
 - Added read-only operations health check with `scripts/hermes_ops_check.py`.
 - Added read-only Slack gateway configuration check with `scripts/hermes_slack_check.py`.
 - Added official documentation link map.
+- Added Kanban operations guide for durable profile-worker task boards.

@@ -243,3 +243,53 @@ hermes mcp list
 5. Run a narrow test and inspect logs.
 
 Use `references/plugins-and-tools.md` for detailed operator workflow.
+
+## Tutorial 9: Kanban For Profile Workers
+
+Goal: create durable tasks that named Hermes profiles can claim and execute.
+
+1. Create or verify worker profiles:
+
+```bash
+hermes profile list
+hermes profile create research
+```
+
+2. Initialize the board:
+
+```bash
+hermes kanban init
+```
+
+3. Create a task:
+
+```bash
+hermes kanban create "Research Hermes gateway health checks" \
+  --assignee research \
+  --workspace scratch \
+  --body "Find official docs and summarize operator steps."
+```
+
+4. Preview dispatch:
+
+```bash
+hermes kanban dispatch --dry-run
+```
+
+5. Dispatch through the gateway or one pass:
+
+```bash
+hermes gateway start
+hermes kanban dispatch --max 1
+```
+
+6. Watch progress:
+
+```bash
+hermes kanban watch
+hermes kanban list
+hermes kanban log <task_id>
+hermes kanban runs <task_id>
+```
+
+Use `references/kanban-operations.md` before creating production task boards.

@@ -66,6 +66,7 @@ python3 scripts/hermes_slack_check.py
 - A setup and tutorial skill for users who want Hermes working locally or through gateways.
 - A safety layer that checks local CLI behavior before trusting remembered commands.
 - A practical guide for Slack, plugins, tools, skills, MCP, cron, profiles, and daily use.
+- A Kanban operator guide for profile workers, isolated workspaces, dependencies, and task notifications.
 
 ## What This Is Not
 
@@ -75,7 +76,7 @@ python3 scripts/hermes_slack_check.py
 
 ## Keywords
 
-Hermes Agent, Hermes Slack bot setup, Hermes gateway self hosting, Hermes install tutorial, Hermes operations runbook, Hermes plugins, Hermes tools, Hermes MCP, Hermes cron, Hermes profiles.
+Hermes Agent, Hermes Slack bot setup, Hermes gateway self hosting, Hermes install tutorial, Hermes operations runbook, Hermes plugins, Hermes tools, Hermes MCP, Hermes cron, Hermes profiles, Hermes Kanban.
 
 ## Why This Exists
 

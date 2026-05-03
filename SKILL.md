@@ -34,6 +34,7 @@ Report update availability before changing configuration. Do not run `hermes upd
    - `references/official-links.md` for official docs, release, reference, and troubleshooting links.
    - `references/slack-gateway.md` for Slack app, channel, Socket Mode, manifest, gateway, and allowlist setup.
    - `references/operations-runbook.md` for tmux sessions, one-shot execution, profiles, cron, webhooks, memory, skills, and autonomy guardrails.
+   - `references/kanban-operations.md` for durable task boards, profile workers, dependencies, isolated workspaces, dispatch, and task notifications.
    - `references/slash-commands.md` for in-session `/...` commands, gateway slash commands, and when to prefer CLI commands.
    - `references/providers-tools-security.md` for key paths, config sections, providers, toolsets, approval modes, redaction, and privacy.
    - `references/plugins-and-tools.md` for user/operator plugin installation, tool enablement, MCP connections, and safe verification.
@@ -52,6 +53,7 @@ Report update availability before changing configuration. Do not run `hermes upd
 - "Check if my Hermes is healthy" -> run `scripts/hermes_ops_check.py`, then `setup-and-update.md`.
 - "Enable a plugin/tool/MCP server" -> `plugins-and-tools.md`, `providers-tools-security.md`.
 - "Teach me how to use Hermes" -> `getting-started-tutorials.md`, `slash-commands.md`, `command-catalog.md`.
+- "Use Kanban", "dispatch workers", or "coordinate profiles" -> `kanban-operations.md`, `operations-runbook.md`.
 
 ## Current CLI Baseline
 

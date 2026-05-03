@@ -94,6 +94,19 @@ hermes webhook test <name>
 
 Route proactive messages to a configured home channel, such as `SLACK_HOME_CHANNEL`.
 
+## Kanban Boards
+
+Use Kanban when work should be durable, assigned to profiles, dependency-aware, and resumable across gateway or CLI sessions.
+
+```bash
+hermes kanban init
+hermes kanban create "Draft weekly report" --assignee research --workspace scratch
+hermes kanban list
+hermes kanban dispatch --dry-run
+```
+
+Use `references/kanban-operations.md` for worker profiles, isolated workspaces, dispatch behavior, notifications, and cleanup.
+
 ## Memory And Skills
 
 Use:

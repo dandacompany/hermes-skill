@@ -113,9 +113,15 @@ hermes cron status
 hermes webhook subscribe <name>
 hermes webhook list
 hermes kanban init
+hermes kanban create "Task title" --assignee <profile> --workspace worktree
+hermes kanban list
+hermes kanban dispatch --dry-run
+hermes kanban watch
 ```
 
 Keep prompts narrow, log outputs, and route proactive delivery to a configured home channel.
+
+Use `references/kanban-operations.md` before running multi-profile task dispatch. `hermes kanban daemon` is deprecated in current local help; gateway now runs the dispatcher.
 
 ### Dashboard, Logs, Debug
 

@@ -11,6 +11,7 @@ Ask whether the task revealed any of these:
 - Official docs, release notes, or source behavior that contradicts this skill.
 - A Slack/gateway setup step that was missing or misleading.
 - A provider, toolset, security, voice, profile, cron, MCP, or dashboard behavior not covered.
+- A Kanban task lifecycle, dispatch, workspace, profile-worker, notification, or cleanup behavior not covered.
 - A reproducible troubleshooting pattern.
 - A safer operating rule, approval boundary, or secret-handling requirement.
 - A scriptable check that would prevent future mistakes.
