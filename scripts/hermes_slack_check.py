@@ -15,6 +15,22 @@ from pathlib import Path
 
 
 SLACK_KEYS = ("SLACK_BOT_TOKEN", "SLACK_APP_TOKEN", "SLACK_ALLOWED_USERS", "SLACK_HOME_CHANNEL")
+REQUIRED_MANIFEST_BOT_SCOPES = (
+    "app_mentions:read",
+    "assistant:write",
+    "channels:history",
+    "channels:read",
+    "chat:write",
+    "commands",
+    "files:read",
+    "files:write",
+    "groups:history",
+    "groups:read",
+    "im:history",
+    "im:read",
+    "im:write",
+    "users:read",
+)
 
 
 def run_cmd(args: list[str], timeout: int) -> dict:
@@ -87,11 +103,31 @@ def output_path(result: dict) -> Path | None:
     return Path(lines[-1]).expanduser() if lines else None
 
 
+def inspect_manifest(path: Path | None) -> dict:
+    if not path:
+        return {"path": None, "present": False}
+    item: dict = {"path": str(path), "present": path.exists()}
+    if not path.exists():
+        return item
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        item["error"] = f"{type(exc).__name__}: {exc}"
+        return item
+    scopes = data.get("oauth_config", {}).get("scopes", {}).get("bot", [])
+    missing = [scope for scope in REQUIRED_MANIFEST_BOT_SCOPES if scope not in scopes]
+    item["bot_scopes"] = scopes
+    item["missing_bot_scopes"] = missing
+    item["ok"] = not missing
+    return item
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Read-only Hermes Slack gateway check.")
     parser.add_argument("--json", action="store_true", help="Print JSON output.")
     parser.add_argument("--timeout", type=int, default=30, help="Per-command timeout in seconds.")
     parser.add_argument("--env-path", type=Path, help="Override Hermes .env path.")
+    parser.add_argument("--manifest-path", type=Path, help="Check a generated Slack manifest for required bot scopes.")
     args = parser.parse_args()
 
     hermes = shutil.which("hermes")
@@ -100,6 +136,7 @@ def main() -> int:
         "hermes_path": hermes,
         "env_path": None,
         "env": {},
+        "manifest": {},
         "checks": {},
         "manual_checks": [
             "Slack app uses Socket Mode.",
@@ -140,14 +177,21 @@ def main() -> int:
         if value.get("warning"):
             report["recommendations"].append(f"{key}: {value['warning']}")
 
+    report["manifest"] = inspect_manifest(args.manifest_path)
+    missing_scopes = report["manifest"].get("missing_bot_scopes") or []
+    if missing_scopes:
+        report["recommendations"].append("Patch Slack manifest missing bot scopes: " + ", ".join(missing_scopes))
+
     if checks["gateway_logs"].get("output"):
         lower = checks["gateway_logs"]["output"].lower()
         if "invalid_auth" in lower or "not_authed" in lower:
             report["recommendations"].append("Slack auth error appears in logs. Rotate/check xoxb/xapp tokens and restart gateway.")
         if "not_in_channel" in lower or "channel_not_found" in lower:
             report["recommendations"].append("Invite the bot to the target channel and verify SLACK_HOME_CHANNEL.")
+        if "missing_scope" in lower and "groups:read" in lower:
+            report["recommendations"].append("Slack app is missing groups:read. Patch the manifest, reinstall the app, then restart the profile gateway.")
 
-    report["ok"] = not missing and all(not v.get("warning") for v in report["env"].values())
+    report["ok"] = not missing and all(not v.get("warning") for v in report["env"].values()) and not missing_scopes
 
     if args.json:
         print(json.dumps(report, indent=2, ensure_ascii=False))
@@ -162,6 +206,9 @@ def main() -> int:
         print("\n## Manual checks")
         for item in report["manual_checks"]:
             print(f"- {item}")
+        if report["manifest"].get("path"):
+            print("\n## Manifest")
+            print(report["manifest"])
         if report["recommendations"]:
             print("\n## Recommendations")
             for item in report["recommendations"]:

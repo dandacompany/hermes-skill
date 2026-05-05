@@ -13,13 +13,24 @@ hermes slack manifest --help
 hermes gateway setup --help
 ```
 
-2. Generate a Slack app manifest when possible:
+2. Generate a Slack app manifest for the active profile when possible:
 
 ```bash
 hermes slack manifest
 ```
 
-If the command supports output flags in local help, write the manifest to a file and use it in Slack app creation.
+If the command supports output flags in local help, write the manifest to a file and use it in Slack app creation. For profile-specific gateways, always run the command with the target profile:
+
+```bash
+hermes -p family slack manifest --write --name "Dante Family Hermes" --description "Private Hermes Agent for family schedules, education, and household operations"
+```
+
+When configuring a remote server from a local Mac, copy the generated manifest locally and place it on the clipboard:
+
+```bash
+scp DanteServer:/home/dante/.hermes/profiles/family/slack-manifest.json /tmp/family-slack-manifest.json
+pbcopy < /tmp/family-slack-manifest.json
+```
 
 3. Create or update the Slack app at `https://api.slack.com/apps`.
 4. Enable Socket Mode.
@@ -59,11 +70,66 @@ Official docs call out these essentials:
 
 Important channel items:
 
-- Public channels need `message.channels` event and `channels:history` scope.
-- Private channels need `message.groups` event and `groups:history` scope.
+- Public channels need `message.channels` event plus `channels:history` and `channels:read` scopes.
+- Private channels need `message.groups` event plus `groups:history` and `groups:read` scopes.
 - App mentions need `app_mention` event.
 - Reinstall the Slack app after changing scopes or event subscriptions.
 - Use `/invite @Hermes Agent` in the target channel.
+
+## Manifest Baseline
+
+Hermes-generated manifests may lag new gateway behavior. Before pasting a profile manifest into Slack, inspect the OAuth bot scopes and patch missing channel-directory scopes.
+
+Minimum bot scopes for the current Slack gateway baseline:
+
+```text
+app_mentions:read
+assistant:write
+channels:history
+channels:read
+chat:write
+commands
+files:read
+files:write
+groups:history
+groups:read
+im:history
+im:read
+im:write
+users:read
+```
+
+The `groups:read` scope is required for private-channel directory lookup. If it is missing, the gateway can still start but logs a warning like:
+
+```text
+missing_scope, needed: groups:read
+```
+
+Patch the generated JSON manifest before copying it to Slack:
+
+```bash
+python3 - <<'PY'
+import json
+from pathlib import Path
+
+p = Path("/home/dante/.hermes/profiles/family/slack-manifest.json")
+data = json.loads(p.read_text())
+scopes = data.setdefault("oauth_config", {}).setdefault("scopes", {}).setdefault("bot", [])
+for scope in ["groups:read"]:
+    if scope not in scopes:
+        scopes.append(scope)
+scopes.sort()
+p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+PY
+```
+
+After saving the updated manifest in Slack, reinstall the app to the workspace and restart the matching profile gateway:
+
+```bash
+hermes -p family gateway restart
+# or systemd
+systemctl --user restart hermes-gateway-family.service
+```
 
 ## Home Channel
 
@@ -121,5 +187,6 @@ If Slack does not respond in a channel:
 6. Reinstall the app after scope/event changes.
 7. Restart gateway: `hermes gateway restart` or stop/start foreground `gateway run`.
 8. Confirm the App-Level token is `xapp-` and the Bot token is `xoxb-`.
+9. If logs mention `missing_scope` with `groups:read`, patch the generated manifest, save it in Slack, reinstall, and restart the profile gateway.
 
 Community reports commonly mention invalid token loops caused by pasting token prefixes twice, missing channel events, or assuming public-channel access works without inviting the bot.
