@@ -29,6 +29,7 @@ REQUIRED_MANIFEST_BOT_SCOPES = (
     "im:history",
     "im:read",
     "im:write",
+    "mpim:read",
     "users:read",
 )
 
@@ -188,8 +189,8 @@ def main() -> int:
             report["recommendations"].append("Slack auth error appears in logs. Rotate/check xoxb/xapp tokens and restart gateway.")
         if "not_in_channel" in lower or "channel_not_found" in lower:
             report["recommendations"].append("Invite the bot to the target channel and verify SLACK_HOME_CHANNEL.")
-        if "missing_scope" in lower and "groups:read" in lower:
-            report["recommendations"].append("Slack app is missing groups:read. Patch the manifest, reinstall the app, then restart the profile gateway.")
+        if "missing_scope" in lower and ("groups:read" in lower or "mpim:read" in lower):
+            report["recommendations"].append("Slack app is missing a channel-directory scope. Patch the manifest, reinstall the app, then restart the profile gateway.")
 
     report["ok"] = not missing and all(not v.get("warning") for v in report["env"].values()) and not missing_scopes
 

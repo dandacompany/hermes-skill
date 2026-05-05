@@ -96,13 +96,15 @@ groups:read
 im:history
 im:read
 im:write
+mpim:read
 users:read
 ```
 
-The `groups:read` scope is required for private-channel directory lookup. If it is missing, the gateway can still start but logs a warning like:
+The `groups:read` scope is required for private-channel directory lookup. The `mpim:read` scope is required when Slack `users.conversations` includes group DMs. If either is missing, the gateway can still start but channel-directory checks may log or return warnings like:
 
 ```text
 missing_scope, needed: groups:read
+missing_scope, needed: mpim:read
 ```
 
 Patch the generated JSON manifest before copying it to Slack:
@@ -115,7 +117,7 @@ from pathlib import Path
 p = Path("/home/dante/.hermes/profiles/family/slack-manifest.json")
 data = json.loads(p.read_text())
 scopes = data.setdefault("oauth_config", {}).setdefault("scopes", {}).setdefault("bot", [])
-for scope in ["groups:read"]:
+for scope in ["groups:read", "mpim:read"]:
     if scope not in scopes:
         scopes.append(scope)
 scopes.sort()
@@ -187,6 +189,6 @@ If Slack does not respond in a channel:
 6. Reinstall the app after scope/event changes.
 7. Restart gateway: `hermes gateway restart` or stop/start foreground `gateway run`.
 8. Confirm the App-Level token is `xapp-` and the Bot token is `xoxb-`.
-9. If logs mention `missing_scope` with `groups:read`, patch the generated manifest, save it in Slack, reinstall, and restart the profile gateway.
+9. If logs mention `missing_scope` with `groups:read` or `mpim:read`, patch the generated manifest, save it in Slack, reinstall, and restart the profile gateway.
 
 Community reports commonly mention invalid token loops caused by pasting token prefixes twice, missing channel events, or assuming public-channel access works without inviting the bot.
