@@ -117,9 +117,13 @@ def inspect_manifest(path: Path | None) -> dict:
         return item
     scopes = data.get("oauth_config", {}).get("scopes", {}).get("bot", [])
     missing = [scope for scope in REQUIRED_MANIFEST_BOT_SCOPES if scope not in scopes]
+    app_home = data.get("features", {}).get("app_home", {})
     item["bot_scopes"] = scopes
     item["missing_bot_scopes"] = missing
-    item["ok"] = not missing
+    item["app_home"] = app_home
+    item["dm_messages_enabled"] = app_home.get("messages_tab_enabled") is True
+    item["dm_messages_writable"] = app_home.get("messages_tab_read_only_enabled") is False
+    item["ok"] = not missing and item["dm_messages_enabled"] and item["dm_messages_writable"]
     return item
 
 
@@ -182,6 +186,11 @@ def main() -> int:
     missing_scopes = report["manifest"].get("missing_bot_scopes") or []
     if missing_scopes:
         report["recommendations"].append("Patch Slack manifest missing bot scopes: " + ", ".join(missing_scopes))
+    if report["manifest"].get("present"):
+        if not report["manifest"].get("dm_messages_enabled"):
+            report["recommendations"].append("Enable Slack App Home messages in the manifest: features.app_home.messages_tab_enabled=true.")
+        if not report["manifest"].get("dm_messages_writable"):
+            report["recommendations"].append("Make Slack App Home messages writable: features.app_home.messages_tab_read_only_enabled=false.")
 
     if checks["gateway_logs"].get("output"):
         lower = checks["gateway_logs"]["output"].lower()

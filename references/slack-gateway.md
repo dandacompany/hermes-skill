@@ -34,23 +34,27 @@ pbcopy < /tmp/family-slack-manifest.json
 
 3. Create or update the Slack app at `https://api.slack.com/apps`.
 4. Enable Socket Mode.
-5. Create tokens:
+5. Enable App Home DM messages:
+   - `features.app_home.messages_tab_enabled: true`
+   - `features.app_home.messages_tab_read_only_enabled: false`
+   - If this is missing, Slack shows "sending messages to this app has been turned off" in the app DM.
+6. Create tokens:
    - Bot Token: starts with `xoxb-`.
    - App-Level Token: starts with `xapp-`.
-6. Subscribe to events and add scopes.
-7. Configure Hermes through the interactive wizard:
+7. Subscribe to events and add scopes.
+8. Configure Hermes through the interactive wizard:
 
 ```bash
 hermes gateway setup
 ```
 
-8. Start in foreground for debugging:
+9. Start in foreground for debugging:
 
 ```bash
 hermes gateway run
 ```
 
-9. After successful messages, install/start as a service:
+10. After successful messages, install/start as a service:
 
 ```bash
 hermes gateway install
@@ -78,7 +82,7 @@ Important channel items:
 
 ## Manifest Baseline
 
-Hermes-generated manifests may lag new gateway behavior. Before pasting a profile manifest into Slack, inspect the OAuth bot scopes and patch missing channel-directory scopes.
+Hermes-generated manifests may lag new gateway behavior. Before pasting a profile manifest into Slack, inspect the OAuth bot scopes and App Home message settings.
 
 Minimum bot scopes for the current Slack gateway baseline:
 
@@ -107,6 +111,8 @@ missing_scope, needed: groups:read
 missing_scope, needed: mpim:read
 ```
 
+App DMs require the App Home messages tab to be enabled and writable. If `features.app_home` is missing or `messages_tab_read_only_enabled` is `true`, Slack can show the app DM as disabled even when Socket Mode and tokens are correct.
+
 Patch the generated JSON manifest before copying it to Slack:
 
 ```bash
@@ -121,6 +127,11 @@ for scope in ["groups:read", "mpim:read"]:
     if scope not in scopes:
         scopes.append(scope)
 scopes.sort()
+data.setdefault("features", {})["app_home"] = {
+    "home_tab_enabled": False,
+    "messages_tab_enabled": True,
+    "messages_tab_read_only_enabled": False,
+}
 p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
 PY
 ```
