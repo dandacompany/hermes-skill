@@ -113,27 +113,11 @@ missing_scope, needed: mpim:read
 
 App DMs require the App Home messages tab to be enabled and writable. If `features.app_home` is missing or `messages_tab_read_only_enabled` is `true`, Slack can show the app DM as disabled even when Socket Mode and tokens are correct.
 
-Patch the generated JSON manifest before copying it to Slack:
+Patch the generated JSON manifest before copying it to Slack. Prefer the skill helper script so the workflow stays reproducible without modifying Hermes Agent itself:
 
 ```bash
-python3 - <<'PY'
-import json
-from pathlib import Path
-
-p = Path("/home/dante/.hermes/profiles/family/slack-manifest.json")
-data = json.loads(p.read_text())
-scopes = data.setdefault("oauth_config", {}).setdefault("scopes", {}).setdefault("bot", [])
-for scope in ["groups:read", "mpim:read"]:
-    if scope not in scopes:
-        scopes.append(scope)
-scopes.sort()
-data.setdefault("features", {})["app_home"] = {
-    "home_tab_enabled": False,
-    "messages_tab_enabled": True,
-    "messages_tab_read_only_enabled": False,
-}
-p.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")
-PY
+python3 <skill-dir>/scripts/patch_slack_manifest.py /home/dante/.hermes/profiles/family/slack-manifest.json
+python3 <skill-dir>/scripts/hermes_slack_check.py --manifest-path /home/dante/.hermes/profiles/family/slack-manifest.json
 ```
 
 After saving the updated manifest in Slack, reinstall the app to the workspace and restart the matching profile gateway:
