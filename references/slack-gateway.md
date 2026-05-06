@@ -113,6 +113,8 @@ missing_scope, needed: mpim:read
 
 App DMs require the App Home messages tab to be enabled and writable. If `features.app_home` is missing or `messages_tab_read_only_enabled` is `true`, Slack can show the app DM as disabled even when Socket Mode and tokens are correct.
 
+Slack's Agents & AI Apps mode can replace the normal Messages tab with Chat and History tabs. Hermes-generated manifests may include `assistant_view`, `assistant:write`, and `assistant_thread_*` events; remove those for a normal DM bot unless you intentionally want Slack's assistant UI.
+
 Patch the generated JSON manifest before copying it to Slack. Prefer the skill helper script so the workflow stays reproducible without modifying Hermes Agent itself:
 
 ```bash

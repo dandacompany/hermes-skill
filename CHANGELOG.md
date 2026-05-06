@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.3 - 2026-05-06
+
+- Updated the Slack manifest patch helper to remove assistant UI fields for normal DM bot setups.
+- Documented that Slack Agents & AI Apps mode can replace the normal Messages tab.
+
 ## v0.1.2 - 2026-05-06
 
 - Added `scripts/patch_slack_manifest.py` so agents can patch Hermes-generated Slack manifests without modifying Hermes Agent source.

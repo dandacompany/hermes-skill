@@ -51,6 +51,9 @@ def patch_manifest(data: dict[str, Any]) -> dict[str, Any]:
     changes: dict[str, Any] = {
         "added_bot_scopes": [],
         "updated_app_home": False,
+        "removed_assistant_view": False,
+        "removed_assistant_scope": False,
+        "removed_assistant_events": [],
     }
 
     oauth_config = data.setdefault("oauth_config", {})
@@ -63,13 +66,35 @@ def patch_manifest(data: dict[str, Any]) -> dict[str, Any]:
         if scope not in bot_scopes:
             bot_scopes.append(scope)
             changes["added_bot_scopes"].append(scope)
+    if "assistant:write" in bot_scopes:
+        bot_scopes.remove("assistant:write")
+        changes["removed_assistant_scope"] = True
     bot_scopes.sort()
 
     features = data.setdefault("features", {})
+    if "assistant_view" in features:
+        features.pop("assistant_view", None)
+        changes["removed_assistant_view"] = True
     current_app_home = features.get("app_home")
     if current_app_home != APP_HOME:
         features["app_home"] = dict(APP_HOME)
         changes["updated_app_home"] = True
+
+    bot_events = (
+        data.setdefault("settings", {})
+        .setdefault("event_subscriptions", {})
+        .setdefault("bot_events", [])
+    )
+    if not isinstance(bot_events, list):
+        raise SystemExit("settings.event_subscriptions.bot_events must be a list")
+    kept_events = []
+    for event in bot_events:
+        if isinstance(event, str) and event.startswith("assistant_thread_"):
+            changes["removed_assistant_events"].append(event)
+        else:
+            kept_events.append(event)
+    if len(kept_events) != len(bot_events):
+        data["settings"]["event_subscriptions"]["bot_events"] = kept_events
 
     return changes
 
@@ -96,7 +121,13 @@ def main() -> int:
     target = args.output.expanduser() if args.output else source
     data = load_manifest(source)
     changes = patch_manifest(data)
-    changed = bool(changes["added_bot_scopes"] or changes["updated_app_home"])
+    changed = bool(
+        changes["added_bot_scopes"]
+        or changes["updated_app_home"]
+        or changes["removed_assistant_view"]
+        or changes["removed_assistant_scope"]
+        or changes["removed_assistant_events"]
+    )
 
     if args.check:
         print(json.dumps({"ok": not changed, "changed": changed, **changes}, indent=2))
