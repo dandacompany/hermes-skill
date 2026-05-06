@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.1.1 - 2026-05-06
 
 - Added Slack App Home DM message settings to the Slack gateway guide so app DMs are writable.
 - Extended `scripts/hermes_slack_check.py` to detect missing or read-only Slack App Home message settings in generated manifests.
