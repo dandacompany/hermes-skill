@@ -12,7 +12,6 @@ from typing import Any
 
 REQUIRED_BOT_SCOPES = (
     "app_mentions:read",
-    "assistant:write",
     "channels:history",
     "channels:read",
     "chat:write",

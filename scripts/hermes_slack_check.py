@@ -17,7 +17,6 @@ from pathlib import Path
 SLACK_KEYS = ("SLACK_BOT_TOKEN", "SLACK_APP_TOKEN", "SLACK_ALLOWED_USERS", "SLACK_HOME_CHANNEL")
 REQUIRED_MANIFEST_BOT_SCOPES = (
     "app_mentions:read",
-    "assistant:write",
     "channels:history",
     "channels:read",
     "chat:write",
@@ -118,12 +117,28 @@ def inspect_manifest(path: Path | None) -> dict:
     scopes = data.get("oauth_config", {}).get("scopes", {}).get("bot", [])
     missing = [scope for scope in REQUIRED_MANIFEST_BOT_SCOPES if scope not in scopes]
     app_home = data.get("features", {}).get("app_home", {})
+    assistant_view = data.get("features", {}).get("assistant_view")
+    bot_events = data.get("settings", {}).get("event_subscriptions", {}).get("bot_events", [])
+    assistant_events = [
+        event for event in bot_events
+        if isinstance(event, str) and event.startswith("assistant_thread_")
+    ]
     item["bot_scopes"] = scopes
     item["missing_bot_scopes"] = missing
+    item["has_assistant_view"] = assistant_view is not None
+    item["has_assistant_write"] = "assistant:write" in scopes
+    item["assistant_events"] = assistant_events
     item["app_home"] = app_home
     item["dm_messages_enabled"] = app_home.get("messages_tab_enabled") is True
     item["dm_messages_writable"] = app_home.get("messages_tab_read_only_enabled") is False
-    item["ok"] = not missing and item["dm_messages_enabled"] and item["dm_messages_writable"]
+    item["ok"] = (
+        not missing
+        and item["dm_messages_enabled"]
+        and item["dm_messages_writable"]
+        and not item["has_assistant_view"]
+        and not item["has_assistant_write"]
+        and not assistant_events
+    )
     return item
 
 
@@ -191,6 +206,8 @@ def main() -> int:
             report["recommendations"].append("Enable Slack App Home messages in the manifest: features.app_home.messages_tab_enabled=true.")
         if not report["manifest"].get("dm_messages_writable"):
             report["recommendations"].append("Make Slack App Home messages writable: features.app_home.messages_tab_read_only_enabled=false.")
+        if report["manifest"].get("has_assistant_view") or report["manifest"].get("has_assistant_write") or report["manifest"].get("assistant_events"):
+            report["recommendations"].append("Remove Slack assistant UI fields for a normal DM bot: features.assistant_view, assistant:write, and assistant_thread_* events.")
 
     if checks["gateway_logs"].get("output"):
         lower = checks["gateway_logs"]["output"].lower()

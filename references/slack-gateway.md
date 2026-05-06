@@ -88,7 +88,6 @@ Minimum bot scopes for the current Slack gateway baseline:
 
 ```text
 app_mentions:read
-assistant:write
 channels:history
 channels:read
 chat:write

@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.1.4 - 2026-05-06
+
+- Corrected the Slack manifest checker so assistant UI settings are treated as removable for normal DM bot setups.
+- Removed `assistant:write` from the documented minimum bot-scope baseline.
+
 ## v0.1.3 - 2026-05-06
 
 - Updated the Slack manifest patch helper to remove assistant UI fields for normal DM bot setups.
